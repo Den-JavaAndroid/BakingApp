@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.denx7.bakingapp.R;
 import com.squareup.picasso.Picasso;
@@ -19,13 +20,15 @@ import recipes.Recipe;
 public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
     private final ArrayList<Recipe> recipes;
-    private ItemClickListener mClickListener;
     private final Context context;
+    private ItemClickListener mClickListener;
 
-    public ReciepsAdapter(Context context, ArrayList<Recipe> recipes) {
+
+    public ReciepsAdapter(Context context, ArrayList<Recipe> recipes, ItemClickListener itemClickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.recipes = recipes;
         this.context = context;
+        mClickListener = itemClickListener;
     }
 
     @Override
@@ -69,13 +72,11 @@ public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
-
-
+            if(mClickListener !=null)
+            mClickListener.onItemClick(getAdapterPosition());
         }
 
     }
-
 
     // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
@@ -83,8 +84,11 @@ public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHold
     }
 
 
+
+
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int position);
     }
+
 }
