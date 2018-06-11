@@ -1,4 +1,4 @@
-package com.example.denx7.bakingapp;
+package ui;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import com.example.denx7.ui.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ReciepsFragment extends Fragment {
+public class RecipeListFragment extends Fragment {
 
     private RestClient restClient;
     private ArrayList<Recipe> recipes = new ArrayList<>();
@@ -84,6 +86,11 @@ public class ReciepsFragment extends Fragment {
                     + " must implement ItemClickListener");
         }
     }
+
+
+
+
+
 
 
 }

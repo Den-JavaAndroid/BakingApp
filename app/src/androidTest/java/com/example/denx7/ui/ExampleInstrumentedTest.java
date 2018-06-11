@@ -1,4 +1,4 @@
-package com.example.denx7.bakingapp;
+package com.example.denx7.ui;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

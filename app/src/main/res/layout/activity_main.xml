@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.denx7.bakingapp.MainActivity">
+    tools:context="ui.RecipeListActivity">
 <fragment
     android:id="@+id/recipes_fragment"
-    android:name="com.example.denx7.bakingapp.ReciepsFragment"
+    android:name="ui.RecipeListFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"

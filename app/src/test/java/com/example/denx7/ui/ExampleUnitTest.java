@@ -1,4 +1,4 @@
-package com.example.denx7.bakingapp;
+package com.example.denx7.ui;
 
 import org.junit.Test;
 

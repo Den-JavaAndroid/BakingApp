@@ -12,64 +12,55 @@ import com.example.denx7.ui.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import recipes.Recipe;
+import recipes.Step;
 
 
-public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHolder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
     private final LayoutInflater mInflater;
-    private final ArrayList<Recipe> recipes;
+    private final List<Step> steps;
     private final Context context;
     private ItemClickListener mClickListener;
 
 
-    public ReciepsAdapter(Context context, ArrayList<Recipe> recipes, ItemClickListener itemClickListener) {
+    public StepsAdapter(Context context, List<Step> steps, ItemClickListener itemClickListener) {
         this.mInflater = LayoutInflater.from(context);
-        this.recipes = recipes;
+        this.steps = steps;
         this.context = context;
         mClickListener = itemClickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recipe_item, parent, false);
+        View view = mInflater.inflate(R.layout.step_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
-        String imageUrl = recipes.get(i).getImage();
-
-        if(!imageUrl.equals(""))
-        Picasso.get()
-                .load(imageUrl)
-                .placeholder(R.drawable.recipe_placeholder)
-                .error(R.drawable.not_found)
-                .into(holder.recipeView);
-
-        holder.recipeName.setText(recipes.get(i).getName());
+        holder.stepName.setText(steps.get(i).getShortDescription());
     }
 
     @Override
     public int getItemCount() {
-        return recipes.size();
+        return steps.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final ImageView recipeView;
-        final TextView recipeName;
+        final TextView stepName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            recipeView = itemView.findViewById(R.id.recipe_image);
-            recipeName = itemView.findViewById(R.id.recipe_name);
+            stepName = itemView.findViewById(R.id.step_name);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if(mClickListener !=null)
-            mClickListener.onItemClick(recipes.get(getAdapterPosition()));
+            mClickListener.onItemClick(steps.get(getAdapterPosition()));
         }
 
     }
@@ -84,7 +75,7 @@ public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHold
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(Recipe recipe);
+        void onItemClick(Step step);
     }
 
 }
