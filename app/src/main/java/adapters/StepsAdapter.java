@@ -40,7 +40,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
-        holder.stepName.setText(steps.get(i).getShortDescription());
+        holder.stepName.setText(i + ". " + steps.get(i).getShortDescription());
+        if(steps.get(i).getThumbnailURL()!=null)
+            holder.playArrow.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -50,10 +53,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView stepName;
+        final ImageView playArrow;
 
         public ViewHolder(View itemView) {
             super(itemView);
             stepName = itemView.findViewById(R.id.step_name);
+            playArrow = itemView.findViewById(R.id.play_arrow);
             itemView.setOnClickListener(this);
         }
 

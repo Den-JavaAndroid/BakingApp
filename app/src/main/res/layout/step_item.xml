@@ -8,12 +8,19 @@
 
     <TextView
         android:id="@+id/step_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/recipe_image"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_margin="18dp"
+        android:layout_weight="1"
+ />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_play_arrow_black_18"
+        android:id="@+id/play_arrow"
+        android:visibility="invisible"
+        android:layout_margin="18dp"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>

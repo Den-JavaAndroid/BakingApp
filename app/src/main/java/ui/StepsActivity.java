@@ -1,5 +1,6 @@
 package ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,10 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
 
     @Override
     public void onItemClick(Step step) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(IntentKeys.STEP, step);
+        final Intent passDataIntent = new Intent(this, DetailViewActivity.class);
+        passDataIntent.putExtras(bundle);
+        startActivity(passDataIntent);
     }
 }
