@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.DetailViewActivity">
+    tools:context="ui.DetailViewActivity"
+    android:layout_marginStart="@dimen/left_margin"
+    android:layout_marginEnd="@dimen/right_margin"
+    >
 
     <FrameLayout
         android:id="@+id/detail_view_fragment"

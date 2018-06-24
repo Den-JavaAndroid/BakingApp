@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <dimen name="left_margin">8dp</dimen>
+        <dimen name="right_margin">8dp</dimen>
+        <dimen name="text_padding">8dp</dimen>
+
+
+
+
+
+</resources>
