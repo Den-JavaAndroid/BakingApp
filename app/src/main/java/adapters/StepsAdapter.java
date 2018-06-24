@@ -65,7 +65,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
             if(mClickListener !=null)
-            mClickListener.onItemClick(steps.get(getAdapterPosition()));
+            mClickListener.onItemClick(steps, getAdapterPosition());
         }
 
     }
@@ -80,7 +80,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(Step step);
+        void onItemClick(List<Step> steps, int stepIndex);
     }
 
 }

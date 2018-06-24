@@ -35,8 +35,6 @@ public class DetailViewFragment extends Fragment {
     private Step step;
     @BindView(R.id.instructions)
     TextView instructions;
-    @BindView(R.id.next_button)
-    Button nextButton;
     @BindView(R.id.media_player)
     SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;

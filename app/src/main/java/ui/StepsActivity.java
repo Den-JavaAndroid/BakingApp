@@ -2,11 +2,15 @@ package ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.denx7.ui.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import adapters.ReciepsAdapter;
 import adapters.StepsAdapter;
@@ -41,9 +45,10 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
 
 
     @Override
-    public void onItemClick(Step step) {
+    public void onItemClick(List<Step> steps, int intex) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(IntentKeys.STEP, step);
+        bundle.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
+        bundle.putInt(IntentKeys.STEP_INDEX, intex);
         final Intent passDataIntent = new Intent(this, DetailViewActivity.class);
         passDataIntent.putExtras(bundle);
         startActivity(passDataIntent);
