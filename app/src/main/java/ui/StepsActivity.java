@@ -29,11 +29,13 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
     public static List<Ingredient> ingredientList = new ArrayList<>();
 
     private Recipe recipe;
+    private boolean tabletSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         StepsFragment stepsFragment = new StepsFragment();
@@ -45,17 +47,41 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
         fragmentManager.beginTransaction()
                 .add(R.id.steps_fragment, stepsFragment)
                 .commit();
+
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            DetailViewFragment detailViewFragment = new DetailViewFragment();
+            detailViewFragment.setStep(recipe.getSteps().get(0));
+            fragmentManager.beginTransaction()
+                    .add(R.id.detail_view_fragment, detailViewFragment)
+                    .commit();
+        }
+
+
     }
 
 
     @Override
     public void onItemClick(List<Step> steps, int intex) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
-        bundle.putInt(IntentKeys.STEP_INDEX, intex);
-        final Intent passDataIntent = new Intent(this, DetailViewActivity.class);
-        passDataIntent.putExtras(bundle);
-        startActivity(passDataIntent);
+
+        tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            final FragmentManager fragmentManager = getSupportFragmentManager();
+
+            DetailViewFragment detailViewFragment = new DetailViewFragment();
+            detailViewFragment.setStep(steps.get(intex));
+            fragmentManager.beginTransaction()
+                    .replace(R.id.detail_view_fragment, detailViewFragment)
+                    .commit();
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
+            bundle.putInt(IntentKeys.STEP_INDEX, intex);
+            final Intent passDataIntent = new Intent(this, DetailViewActivity.class);
+            passDataIntent.putExtras(bundle);
+            startActivity(passDataIntent);
+        }
+
     }
 
     @Override
