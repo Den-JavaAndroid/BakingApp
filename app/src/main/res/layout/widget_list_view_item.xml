@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="6dp"
+    android:orientation="horizontal"
+    android:background="#b3d9ff">
+
+
+    <TextView
+        android:id="@+id/widget_list_view_text_ingredient"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#000000"
+        tools:text="Ingredient" />
+
+    <TextView
+        android:id="@+id/widget_list_view_text_quantity"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        tools:text="2.0" />
+
+    <TextView
+        android:id="@+id/widget_list_view_text_measure"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="#000000"
+        tools:text="CUP" />
+
+</LinearLayout>

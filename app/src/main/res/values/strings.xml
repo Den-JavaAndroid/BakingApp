@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BakingApp</string>
+    <string name="appwidget_text">Recipe Widget</string>
 </resources>
