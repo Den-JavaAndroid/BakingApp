@@ -33,7 +33,21 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     compile group: 'com.google.android.exoplayer', name: 'exoplayer', version: '2.8.0'
+    compile 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
 
+
+    // dependencies for test
+    androidTestCompile 'com.android.support:support-annotations:27.1.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestCompile 'com.android.support.test:rules:1.0.2'
+    androidTestCompile 'com.android.support.test:runner:1.0.2'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 
 
 }
