@@ -14,12 +14,25 @@
         <activity android:name="ui.RecipeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ui.StepsActivity"></activity>
-        <activity android:name="ui.DetailViewActivity"></activity>
+
+        <activity
+            android:name="ui.StepsActivity"
+            android:parentActivityName="ui.RecipeListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.RecipeListActivity" />
+        </activity>
+
+        <activity
+            android:name="ui.DetailViewActivity"
+            android:parentActivityName="ui.StepsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.StepsActivity" />
+        </activity>
 
 
         <receiver android:name="widget.RecipeIngredientWidgetProvider">

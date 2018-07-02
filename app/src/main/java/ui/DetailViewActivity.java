@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +35,11 @@ public class DetailViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActionBar actionBar = this.getSupportActionBar();
+        // Set the action bar back button to look like an up button
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.activity_detail_view);
         nextButton = findViewById(R.id.next_button);
         previousButton = findViewById(R.id.previous_button);
@@ -103,6 +108,7 @@ public class DetailViewActivity extends AppCompatActivity {
         outState.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
 
     }
+
 
 
 }

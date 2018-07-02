@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -12,7 +13,6 @@ import com.example.denx7.ui.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.ReciepsAdapter;
 import adapters.StepsAdapter;
 import keys.IntentKeys;
 import recipes.Ingredient;
@@ -34,6 +34,11 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = this.getSupportActionBar();
+        // Set the action bar back button to look like an up button
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.activity_steps);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
