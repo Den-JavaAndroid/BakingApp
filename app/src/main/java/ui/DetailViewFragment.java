@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class DetailViewFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (savedInstanceState == null) {
-            if (!step.getVideoURL().equals("") && NetworkUtils.isOnline(getContext())) {
+            if (!TextUtils.isEmpty(step.getVideoURL()) && NetworkUtils.isOnline(getContext())) {
                 initializePlayer(Uri.parse(step.getVideoURL()));
             } else {
                 mPlayerView.setVisibility(View.GONE);
@@ -54,7 +55,7 @@ public class DetailViewFragment extends Fragment {
             instructions.setText(step.getDescription());
         } else {
             step = (Step) savedInstanceState.getSerializable("savedStep");
-            if (!step.getVideoURL().equals("")) {
+            if (!TextUtils.isEmpty(step.getVideoURL())) {
                 initializePlayer(Uri.parse(step.getVideoURL()));
             } else {
                 mPlayerView.setVisibility(View.GONE);
@@ -88,7 +89,7 @@ public class DetailViewFragment extends Fragment {
     }
 
     private void releasePlayer() {
-        if (!step.getVideoURL().equals("") && mExoPlayer != null) {
+        if (!TextUtils.isEmpty(step.getVideoURL()) && mExoPlayer != null) {
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
@@ -100,6 +101,7 @@ public class DetailViewFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putSerializable("savedStep", step);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
