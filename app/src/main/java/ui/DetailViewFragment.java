@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.denx7.ui.R;
@@ -24,6 +24,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +40,8 @@ public class DetailViewFragment extends Fragment {
     @BindView(R.id.media_player)
     SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
+    @BindView(R.id.thumbnailImage)
+    ImageView thumbnailImage;
 
     @Nullable
     @Override
@@ -53,6 +56,7 @@ public class DetailViewFragment extends Fragment {
                 mPlayerView.setVisibility(View.GONE);
             }
             instructions.setText(step.getDescription());
+            setThumbnailImage();
         } else {
             step = (Step) savedInstanceState.getSerializable("savedStep");
             if (!TextUtils.isEmpty(step.getVideoURL())) {
@@ -61,12 +65,10 @@ public class DetailViewFragment extends Fragment {
                 mPlayerView.setVisibility(View.GONE);
             }
             instructions.setText(step.getDescription());
-
+            setThumbnailImage();
         }
 
-
         return view;
-
     }
 
     public void setStep(Step step) {
@@ -93,6 +95,18 @@ public class DetailViewFragment extends Fragment {
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
+        }
+    }
+
+    private void setThumbnailImage() {
+        String recipeImage = step.getThumbnailURL();
+        if (!TextUtils.isEmpty(recipeImage)) {
+            thumbnailImage.setVisibility(View.VISIBLE);
+            Picasso.get()
+                    .load(recipeImage)
+                    .placeholder(R.drawable.recipe_placeholder)
+                    .error(R.drawable.not_found)
+                    .into(thumbnailImage);
         }
     }
 

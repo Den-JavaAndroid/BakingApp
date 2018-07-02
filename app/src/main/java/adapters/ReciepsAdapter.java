@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class ReciepsAdapter extends RecyclerView.Adapter<ReciepsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int i) {
         String imageUrl = recipes.get(i).getImage();
 
-        if(!imageUrl.equals(""))
+        if(!TextUtils.isEmpty(imageUrl))
         Picasso.get()
                 .load(imageUrl)
                 .placeholder(R.drawable.recipe_placeholder)
