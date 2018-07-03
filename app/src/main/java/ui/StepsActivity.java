@@ -29,38 +29,50 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
     private Recipe recipe;
     private boolean tabletSize;
 
+    private int stepIndex;
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    private String tag = "stepsFragment";
+    private String tagDetailViewFragment = "detailViewFragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        String tag = "stepsFragment";
+
 
         StepsFragment stepsFragment = (StepsFragment) fragmentManager.findFragmentByTag(tag);
 
         if(savedInstanceState == null) {
             recipe = getIntent().getParcelableExtra(IntentKeys.RECIPE);
+            stepIndex= 0;
         }else {
             recipe = savedInstanceState.getParcelable(IntentKeys.RECIPE);
+            stepIndex = savedInstanceState.getInt(IntentKeys.STEP_INDEX);
         }
         setTitle(recipe.getName());
 
         if(stepsFragment == null) {
             stepsFragment = new StepsFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.steps_fragment, stepsFragment)
+                    .replace(R.id.steps_fragment, stepsFragment, tag)
                     .commit();
         }
         stepsFragment.setRecipe(recipe);
 
         tabletSize = getResources().getBoolean(R.bool.isTablet);
+
         if (tabletSize) {
-            DetailViewFragment detailViewFragment = new DetailViewFragment();
-            detailViewFragment.setStep(recipe.getSteps().get(0));
-            fragmentManager.beginTransaction()
-                    .add(R.id.detail_view_fragment, detailViewFragment)
-                    .commit();
+
+            DetailViewFragment detailViewFragment = (DetailViewFragment) fragmentManager.findFragmentByTag(tagDetailViewFragment);
+            if(detailViewFragment == null){
+                detailViewFragment = new DetailViewFragment();
+                detailViewFragment.setStep(recipe.getSteps().get(stepIndex));
+                fragmentManager.beginTransaction()
+                        .replace(R.id.detail_view_fragment, detailViewFragment, tagDetailViewFragment)
+                        .commit();
+            }
+
         }
 
 
@@ -68,21 +80,25 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
 
 
     @Override
-    public void onItemClick(List<Step> steps, int intex) {
+    public void onItemClick(List<Step> steps, int index) {
 
         tabletSize = getResources().getBoolean(R.bool.isTablet);
+        stepIndex = index;
         if (tabletSize) {
-            final FragmentManager fragmentManager = getSupportFragmentManager();
 
-            DetailViewFragment detailViewFragment = new DetailViewFragment();
-            detailViewFragment.setStep(steps.get(intex));
-            fragmentManager.beginTransaction()
-                    .replace(R.id.detail_view_fragment, detailViewFragment)
-                    .commit();
+
+            DetailViewFragment detailViewFragment = null;
+            if(detailViewFragment == null){
+                detailViewFragment = new DetailViewFragment();
+                detailViewFragment.setStep(recipe.getSteps().get(stepIndex));
+                fragmentManager.beginTransaction()
+                        .replace(R.id.detail_view_fragment, detailViewFragment)
+                        .commit();
+            }
         } else {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
-            bundle.putInt(IntentKeys.STEP_INDEX, intex);
+            bundle.putInt(IntentKeys.STEP_INDEX, index);
             final Intent passDataIntent = new Intent(this, DetailViewActivity.class);
             passDataIntent.putExtras(bundle);
             startActivity(passDataIntent);
@@ -115,6 +131,7 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(IntentKeys.RECIPE, recipe);
+        outState.putInt(IntentKeys.STEP_INDEX, stepIndex);
     }
 
 }
