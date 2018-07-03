@@ -32,6 +32,10 @@ public class StepsFragment extends Fragment {
         View view = inflater.inflate(R.layout.recipe_steps, container, false);
         ButterKnife.bind(this, view);
 
+        if(savedInstanceState != null){
+            recipe = savedInstanceState.getParcelable(IntentKeys.RECIPE);
+        }
+
         TextView ingredients = view.findViewById(R.id.ingredients);
         RecyclerView recipeStepsRecyclerView = view.findViewById(R.id.recipe_steps);
         StepsAdapter stepsAdapter = new StepsAdapter(getContext(), recipe.getSteps(),(StepsAdapter.ItemClickListener) getActivity());
@@ -46,5 +50,11 @@ public class StepsFragment extends Fragment {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(IntentKeys.RECIPE, recipe);
     }
 }

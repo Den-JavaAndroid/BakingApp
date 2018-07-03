@@ -35,19 +35,24 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
         setContentView(R.layout.activity_steps);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        StepsFragment stepsFragment = new StepsFragment();
+        String tag = "stepsFragment";
+
+        StepsFragment stepsFragment = (StepsFragment) fragmentManager.findFragmentByTag(tag);
 
         if(savedInstanceState == null) {
             recipe = getIntent().getParcelableExtra(IntentKeys.RECIPE);
         }else {
             recipe = savedInstanceState.getParcelable(IntentKeys.RECIPE);
         }
-        stepsFragment.setRecipe(recipe);
         setTitle(recipe.getName());
 
-        fragmentManager.beginTransaction()
-                .add(R.id.steps_fragment, stepsFragment)
-                .commit();
+        if(stepsFragment == null) {
+            stepsFragment = new StepsFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.steps_fragment, stepsFragment)
+                    .commit();
+        }
+        stepsFragment.setRecipe(recipe);
 
         tabletSize = getResources().getBoolean(R.bool.isTablet);
         if (tabletSize) {
