@@ -35,11 +35,7 @@ public class DetailViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = this.getSupportActionBar();
-        // Set the action bar back button to look like an up button
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
         setContentView(R.layout.activity_detail_view);
         nextButton = findViewById(R.id.next_button);
         previousButton = findViewById(R.id.previous_button);
@@ -106,8 +102,9 @@ public class DetailViewActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(IntentKeys.STEP_INDEX, stepIndex);
         outState.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
-
     }
+
+
 
 
 

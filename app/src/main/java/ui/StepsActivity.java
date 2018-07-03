@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.example.denx7.ui.R;
 
@@ -34,18 +32,16 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = this.getSupportActionBar();
-        // Set the action bar back button to look like an up button
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_steps);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         StepsFragment stepsFragment = new StepsFragment();
 
-        recipe = getIntent().getParcelableExtra(IntentKeys.RECIPE);
+        if(savedInstanceState == null) {
+            recipe = getIntent().getParcelableExtra(IntentKeys.RECIPE);
+        }else {
+            recipe = savedInstanceState.getParcelable(IntentKeys.RECIPE);
+        }
         stepsFragment.setRecipe(recipe);
         setTitle(recipe.getName());
 
@@ -99,8 +95,6 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
 
 
     @Override
-
-
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_add) {
@@ -108,9 +102,14 @@ public class StepsActivity extends AppCompatActivity implements StepsAdapter.Ite
             ingredientList = recipe.getIngredients();
             IngredientListService.startActionChangeIngredientList(this);
             return true;
-
         }
         return super.onOptionsItemSelected(item);
-
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(IntentKeys.RECIPE, recipe);
+    }
+
 }

@@ -27,11 +27,7 @@
         </activity>
 
         <activity
-            android:name="ui.DetailViewActivity"
-            android:parentActivityName="ui.StepsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ui.StepsActivity" />
+            android:name="ui.DetailViewActivity">
         </activity>
 
 
