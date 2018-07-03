@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/left_margin"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/player_container">
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/media_player"
@@ -14,7 +15,7 @@
         android:id="@+id/thumbnailImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/no_video"

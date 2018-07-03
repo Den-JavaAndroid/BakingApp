@@ -1,6 +1,7 @@
 package ui;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
@@ -16,11 +17,7 @@ import com.example.denx7.ui.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.StepsAdapter;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import keys.IntentKeys;
-import recipes.Recipe;
 import recipes.Step;
 
 
@@ -35,14 +32,9 @@ public class DetailViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_detail_view);
-        nextButton = findViewById(R.id.next_button);
-        previousButton = findViewById(R.id.previous_button);
-        currentStepTxv = findViewById(R.id.current_step);
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
-        DetailViewFragment detailViewFragment = new DetailViewFragment();
+        String tag = "detailViewFragment";
+        DetailViewFragment detailViewFragment = (DetailViewFragment) fragmentManager.findFragmentByTag(tag);
 
         if (savedInstanceState == null) {
             steps = getIntent().getParcelableArrayListExtra(IntentKeys.STEPS);
@@ -51,49 +43,64 @@ public class DetailViewActivity extends AppCompatActivity {
             steps = savedInstanceState.getParcelableArrayList(IntentKeys.STEPS);
             stepIndex = savedInstanceState.getInt(IntentKeys.STEP_INDEX);
         }
+        setContentView(R.layout.activity_detail_view);
 
-        detailViewFragment.setStep(steps.get(stepIndex));
-        fragmentManager.beginTransaction()
-                .add(R.id.detail_view_fragment, detailViewFragment)
-                .commit();
+        if (detailViewFragment == null) {
+            detailViewFragment = new DetailViewFragment();
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (stepIndex < steps.size() - 1) {
-                    DetailViewFragment detailViewFragment = new DetailViewFragment();
-                    detailViewFragment.setStep(steps.get(stepIndex + 1));
-                    stepIndex++;
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.detail_view_fragment, detailViewFragment)
-                            .commit();
-                    currentStepTxv.setText(stepIndex + "/" + (steps.size() - 1));
+            detailViewFragment.setStep(steps.get(stepIndex));
+            fragmentManager.beginTransaction()
+                    .add(R.id.detail_view_fragment, detailViewFragment, tag)
+                    .commit();
+        }
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is the last step", Toast.LENGTH_SHORT).show();
+        nextButton = findViewById(R.id.next_button);
+        previousButton = findViewById(R.id.previous_button);
+        currentStepTxv = findViewById(R.id.current_step);
+
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            nextButton.setVisibility(View.VISIBLE);
+            previousButton.setVisibility(View.VISIBLE);
+            currentStepTxv.setVisibility(View.VISIBLE);
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (stepIndex < steps.size() - 1) {
+                        DetailViewFragment detailViewFragment = new DetailViewFragment();
+                        detailViewFragment.setStep(steps.get(stepIndex + 1));
+                        stepIndex++;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.detail_view_fragment, detailViewFragment)
+                                .commit();
+                        currentStepTxv.setText(stepIndex + "/" + (steps.size() - 1));
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "This is the last step", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (stepIndex > 1) {
-                    DetailViewFragment detailViewFragment = new DetailViewFragment();
-                    detailViewFragment.setStep(steps.get(stepIndex - 1));
-                    stepIndex--;
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.detail_view_fragment, detailViewFragment)
-                            .commit();
-                    currentStepTxv.setText(stepIndex + "/" + (steps.size() - 1));
+            previousButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (stepIndex > 1) {
+                        DetailViewFragment detailViewFragment = new DetailViewFragment();
+                        detailViewFragment.setStep(steps.get(stepIndex - 1));
+                        stepIndex--;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.detail_view_fragment, detailViewFragment)
+                                .commit();
+                        currentStepTxv.setText(stepIndex + "/" + (steps.size() - 1));
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "This is the first step", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "This is the first step", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
 
-        currentStepTxv.setText(stepIndex + "/" + steps.size());
+            currentStepTxv.setText(stepIndex + "/" + steps.size());
+        }
 
     }
 
@@ -103,9 +110,6 @@ public class DetailViewActivity extends AppCompatActivity {
         outState.putInt(IntentKeys.STEP_INDEX, stepIndex);
         outState.putParcelableArrayList(IntentKeys.STEPS, (ArrayList<? extends Parcelable>) steps);
     }
-
-
-
 
 
 }
